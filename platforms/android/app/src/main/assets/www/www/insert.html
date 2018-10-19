@@ -1,0 +1,87 @@
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Unión Ferroviaria</title>
+<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+<script type="text/javascript" src="../js/jquery.js"></script>
+<script type="text/javascript" src="../js/bootstrap.min.js"></script>
+<script type="text/javascript">
+ $(document).ready(function()
+ {
+ $("#insert").click(function(){
+ var apellido=$("#apellido").val();
+ var nombre=$("#nombre").val();
+ var cuil=$("#cuil").val();
+ var mail=$("#mail").val();
+ var contrasena=$("#contrasena").val();
+ var rep_contrasena=$("#rep_contrasena").val();
+
+ var dataString="apellido="+apellido+"&nombre="+nombre+"&cuil="+cuil+"&mail="+mail+"&contrasena="+contrasena+"&rep_contrasena="+rep_contrasena+"&insert=";
+ if($.trim(apellido).length>0 & $.trim(nombre).length>0 & $.trim(cuil).length>0 & $.trim(mail).length>0 & $.trim(contrasena).length>0 & $.trim(rep_contrasena).length>0)
+ {
+ $.ajax({
+ type: "POST",
+ url:"http://localhost:81/app/insert.php",
+ data: dataString,
+ crossDomain: true,
+ cache: false,
+ beforeSend: function(){ $("#insert").val('Registrando...');},
+ success: function(data){
+ if(data==="ok")
+ {
+ alert("Registrado Correctamente");
+ $("#insert").val('submit');
+ }
+ else if(data==="error")
+ {
+ alert("Error en la registración, por favor intente mas tarde");
+ }
+ }
+ });
+ }else{
+  alert("Complete todos los campos");   }
+  setTimeout('document.location.reload()',2000);
+ 
+ });
+ });
+ </script>
+</head>
+<body>
+ <nav class="navbar navbar-light bg-light" style="background-color: #1ba537;border-color: #000; color: #fffcfc;    text-align: -webkit-center;">
+ <h4 class="title">REGISTRO</h4>
+ </nav>
+ <a class="btn btn-outline-primary" href="../index.html">Volver</a>
+
+ <div class="form-group">
+ <label>APELLIDO</label>
+ <input class="form-control" type="text" id="apellido" value=""/>
+ </div>
+ <div class="form-group">
+ <label>NOMBRE</label>
+ <input class="form-control" type="text" id="nombre" value=""/>
+ </div>
+ <div class="form-group">
+ <label>CUIL</label>
+ <input class="form-control" type="text" id="cuil" value=""/>
+ </div>
+  <div class="form-group">
+ <label>MAIL</label>
+ <input class="form-control" type="text" id="mail" value=""/>
+ </div>
+ <div class="form-group">
+ <label>CONTRASEÑA</label>
+ <input class="form-control" type="password" id="contrasena" value=""/>
+ </div>  <div class="form-group">
+ <label>REPETIR CONTRASEÑA</label>
+ <input class="form-control" type="password" id="rep_contrasena" value=""/>
+ </div>
+ 
+ <div class="form-group">
+ <input type="button" id="insert" class="btn btn-info" role="button" value="REGISTRARME"/>
+ </div>
+ </div>
+</body>
+
+ 
+</html>
+ 
